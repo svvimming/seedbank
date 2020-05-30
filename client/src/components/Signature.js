@@ -198,18 +198,17 @@ class Doodle extends Component {
   }
 
   submitDrawing = () => {
-    // if(42<this.points.length) {
       var hex = this.hsltohex(this.hsl[0], this.hsl[1], this.hsl[2]);
       var data = {
         color: hex,
         path: this.points,
       };
-      // if(500<this.points.length) {
-        // var path_data = this.points.splice(0, this.points.length-500);
-      // } else {
-      //   var path_data = this.points;
-      // }
-    // }
+      if (42<this.points.length && this.points.length<501){
+        console.log(data);
+      }
+      //
+      // joel, help me write a post request here, smile...
+      //
   }
 
   disappear = (t) => {

@@ -9,7 +9,7 @@ import Header from "./components/header";
 import Glitch from "./pages/Glitch";
 import Patch from "./pages/Patch";
 import EventIntensities from "./components/EventIntensities";
-import Signature from "./components/Signature";
+// import Signature from "./components/Signature";
 import "./index.css";
 import "./animation-library.css";
 // import { ThemeProvider } from "styled-components";
@@ -243,17 +243,6 @@ class App extends Component {
                   updateLocation={this.updateLocation}
                   updateMinorLocations={this.updateMinorLocations}
                   updateArray={this.updateArray}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/bichos"
-              render={() => (
-                <Signature
-                offTop = {100}
-                updateLocation={this.updateLocation}
-                updateMinorLocations={this.updateMinorLocations}
                 />
               )}
             />
