@@ -9,6 +9,7 @@ import Header from "./components/header";
 import Glitch from "./pages/Glitch";
 import Patch from "./pages/Patch";
 import EventIntensities from "./components/EventIntensities";
+import Chain from "./components/plobchain";
 // import Signature from "./components/Signature";
 import "./index.css";
 import "./animation-library.css";
@@ -230,6 +231,8 @@ class App extends Component {
               )}
             />
             <Route exact path="/auth" component={AuthPage} />
+            <Route exact path="/plobs" component={Chain} />
+
             <Route
               exact
               path="/events"
