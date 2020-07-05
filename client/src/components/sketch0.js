@@ -1,5 +1,5 @@
 import "p5/lib/addons/p5.sound";
-import boing from "../assets/ehorn.mp3";
+import boing from "../assets/img/boing.mp3";
 import io from "socket.io-client"
 
 export default function sketch(p){
