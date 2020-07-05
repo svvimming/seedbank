@@ -1,14 +1,17 @@
 import "p5/lib/addons/p5.sound";
-import boing from "../assets/ehorn.mp3";
+import ehorn from "../assets/ehorn.mp3";
+import mwow from "../assets/mmmwow.mp3";
 import io from "socket.io-client"
+const mp3s = [ehorn, mwow];
 
 export default function sketch(p){
     let canvas;
     let socket;
     let song;
+    let bufnum;
+    let buffers = [];
 
-
-    p.setup = () => {
+    p.setup = (props) => {
       canvas = p.createCanvas(500, 500);
       p.noStroke();
       p.background('orangered');
@@ -17,24 +20,31 @@ export default function sketch(p){
       p.newDrawing(data);
       });
 
-      song = p.loadSound(boing);
-
+      for(let i=0; i<mp3s.length; i++){
+        buffers[i] = p.loadSound(mp3s[i]);
+      }
+      bufnum = 0;
     }
+
+      p.myCustomRedrawAccordingToNewPropsHandler = function (props) {
+        bufnum = props.sound;
+    };
 
     p.newDrawing = (data) =>{
       console.log(data);
       p.noStroke();
       p.fill('green');
       p.ellipse(data.x, data.y, 36, 36);
-      song.play();
+      buffers[data.sound].play();
     }
 
     p.mouseDragged = () => {
-      console.log(p.mouseX+ ',' + p.mouseY);
+      console.log([p.mouseX, p.mouseY]);
 
       var data={
       x: p.mouseX,
-      y: p.mouseY
+      y: p.mouseY,
+      sound: bufnum
     }
 
     socket.emit('mouse', data);
@@ -45,9 +55,9 @@ export default function sketch(p){
 
     }
 
-
-    p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
-      if(canvas) //Make sure the canvas has been created
-        p.fill(newProps.color);
-    }
+//
+//     p.myCustomRedrawAccordingToNewPropsHandler = (newProps) => {
+//       if(canvas) //Make sure the canvas has been created
+//         p.fill(newProps.color);
+//     }
 }

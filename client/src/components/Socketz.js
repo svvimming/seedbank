@@ -5,20 +5,20 @@ import sketch from './sketch';
 class Sock extends Component {
   constructor(){
     super();
-    this.state = {color:[Math.random()*255, Math.random()*255, Math.random()*255]};
+    this.state = {sound: 0};
     this.randomColor = this.randomColor.bind(this);
   }
 
-  randomColor(){
-    this.setState({color:[Math.random()*255, Math.random()*255, Math.random()*255]}
-    )
+  randomColor(ind){
+    this.setState({sound: ind});
   }
 
   render() {
     return (
       <div>
-        <button onClick={this.randomColor}>Random Color</button>
-        <P5Wrapper sketch={sketch} color={this.state.color}></P5Wrapper>
+        <button onClick={() => this.randomColor(0)}>ehorn</button>
+        <button onClick={() => this.randomColor(1)}>mwow</button>
+        <P5Wrapper sketch={sketch} sound={this.state.sound}></P5Wrapper>
       </div>
     );
   }
