@@ -17,6 +17,9 @@ export default function sketch(p){
       p.background('orangered');
       socket = io();
       socket.on("mouse", data => {
+      p.setVolume(data);
+      });
+      socket.on("mouseDown", data => {
       p.newDrawing(data);
       });
 
@@ -31,27 +34,46 @@ export default function sketch(p){
     };
 
     p.newDrawing = (data) =>{
-      console.log(data);
       p.noStroke();
       p.fill('green');
       p.ellipse(data.x, data.y, 36, 36);
-      buffers[data.sound].play();
+      buffers[data.sound].play(0, 1, data.gain);
     }
 
-    p.mouseDragged = () => {
-      console.log([p.mouseX, p.mouseY]);
+    p.setVolume = (data) =>{
+      p.noStroke();
+      p.fill('green');
+      p.ellipse(data.x, data.y, 36, 36);
+      buffers[data.sound].setVolume(data.gain, 0.01);
+    }
 
+    p.mousePressed = () => {
       var data={
       x: p.mouseX,
       y: p.mouseY,
-      sound: bufnum
+      sound: bufnum,
+      gain: 0.0
+      }
+      socket.emit('mouseDown', data);
+
+      p.fill('blue');
+      p.ellipse(p.mouseX, p.mouseY, 36, 26);
     }
 
-    socket.emit('mouse', data);
+    p.mouseDragged = () => {
+      var level = Math.sqrt(Math.pow(p.pmouseX-p.mouseX, 2) + Math.pow(p.pmouseY-p.mouseY, 2));
+      var data={
+      x: p.mouseX,
+      y: p.mouseY,
+      sound: bufnum,
+      gain: p.min(level*0.04, 1.0)
+      }
+
+      socket.emit('mouse', data);
 
 
-    p.fill('blue');
-    p.ellipse(p.mouseX, p.mouseY, 36, 26);
+      p.fill('blue');
+      p.ellipse(p.mouseX, p.mouseY, 36, 26);
 
     }
 

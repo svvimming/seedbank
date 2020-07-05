@@ -70,9 +70,15 @@ function newConnection(socket){
   console.log("newconnection " + socket.id);
 
 	socket.on('mouse', mouseMsg);
+	socket.on('mouseDown', mouseDownMsg);
 
   function mouseMsg(data){
     socket.broadcast.emit('mouse', data);
     console.log(data);
   }
+
+	function mouseDownMsg(data){
+		socket.broadcast.emit('mouseDown', data);
+		console.log(data);
+	}
 }
